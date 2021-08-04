@@ -6,6 +6,7 @@ public class Tablero {
     private int[][] table = new int[5][6];
     private String[][] table_final = new String[6][6];
     static private Scanner input = new Scanner(System.in);
+    //table_final es la matriz que se usara para juntar en la matriz completa
 
     public Tablero(){
         
