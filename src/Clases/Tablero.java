@@ -126,8 +126,8 @@ public class Tablero {
     }
     public boolean existe(String valores[]){
         for (int i=1; i<6; i++) {
-            if(table_final[i][Integer.parseInt(valores[i])].equals(valores[1])){
-                table_final[i][Integer.parseInt(valores[i])] = "X";
+            if(table_final[i][Integer.parseInt(valores[0])].equals(valores[1])){
+                table_final[i][Integer.parseInt(valores[0])] = "X";
                 return true;
             }
         }

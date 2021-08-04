@@ -47,7 +47,7 @@ public class Partida {
             String balota[] = balota();
             System.out.print("Digite los tableros que tienen la letra con el valor (separado por comas): ");
             String valores[] = Principal.sc.nextLine().replaceAll(" ","").split(",");
-            if(valores.length == 1 && Integer.parseInt(valores[0])==0){
+            if(valores.length == 1 && valores[0].equals("0")){
                 System.out.println("Siguiente balota!!");
             }else if(valores.length == 1 && valores[0].equalsIgnoreCase("s")){
                 System.out.println("Salir");
@@ -127,6 +127,6 @@ public class Partida {
         return balota;
     }
     public void verificar_victoria(){
-
+        System.out.println("Game over");
     }
 }   
