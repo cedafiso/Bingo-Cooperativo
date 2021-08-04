@@ -5,9 +5,14 @@ import java.util.ArrayList;
 public class Partida {
     private Adulto usuario_a;
     private Nino usuario_b;
-    private ArrayList <Tablero> Cartones = new ArrayList<Tablero>();
-    private int memoria[][] = new int[15][5];
+    private ArrayList <Tablero> cartones = new ArrayList<Tablero>();
     
+    public ArrayList<Tablero> getCartones() {
+        return cartones;
+    }
+    public void setCartones(ArrayList<Tablero> cartones) {
+        this.cartones = cartones;
+    }
     //------>Constructores
     public Partida(Adulto usuario_a) {
         this.usuario_a = usuario_a;
@@ -22,39 +27,56 @@ public class Partida {
         for(int i=0; i<n_tableros; i++){
             if(n_aleatorios > 0){
                 n_aleatorios--;
-                Cartones.add(new Tablero());
-                Cartones.get(Cartones.size()-1).T_aleatorio();
+                Tablero ec = new Tablero();
+                ec.setTable(Tablero.llenar_tablero_aletorio());
+                ec.carton();
+                cartones.add(ec);
             }else{
                 System.out.printf("\nLlenado de datos carton #%d:\n", (i+1));
-                Cartones.add(new Tablero());
-                Cartones.get(Cartones.size()-1).T_personalizado();
+                Tablero ec = new Tablero();
+                ec.setTable(Tablero.llenar_tablero_personalizado());
+                ec.carton();
+                cartones.add(ec);
             }
         }
-        imprimir_tableros();
-    }   
+        String[][] tablero_completo = crearMultiplesTablas(n_tableros);
+        Tablero.imprimir_tablero(tablero_completo);
+    } 
+    public String[][] crearMultiplesTablas(int cantidad){
+        ArrayList<ArrayList<String>> tablero_completo = new ArrayList<ArrayList<String>>();
+        for(int i =0; i<6;i++){
+            ArrayList<String> temporal = new ArrayList<String>();
+            for (Tablero table : cartones) {
+                for(int j = 0; j<(table.getTable_final()[i]).length;j++){
+                    temporal.add((table.getTable_final())[i][j]);
+                }
+            }
+            tablero_completo.add(temporal);  
+        }
+        String[][] table_prueba = new String[6][6*cantidad];
+        for (int i = 0; i<tablero_completo.size();i++){
+            for(int j = 0; j<tablero_completo.get(i).size();j++){
+                table_prueba[i][j] = tablero_completo.get(i).get(j); 
+            }
+        }
+        return table_prueba;
+    } 
 
     public void jugar(int aleatorio){                      //Para niños
-        Cartones.add(new Tablero());
-        if(aleatorio == 1){Cartones.get(0).T_aleatorio();}
-        else{Cartones.get(0).T_personalizado();}
-        imprimir_tableros();
-    }
-
-    public void imprimir_tableros(){
-        for(int C_numero = 0; C_numero < Cartones.size(); C_numero++){
-            String temp[][] = Cartones.get(C_numero).getCasillas();
-            System.out.printf("\n\tTablero #: %d\n", (C_numero+1));
-            System.out.printf("\t|");
-            for (String letra : Tablero.getLetras()) {System.out.printf("  %s\t|",letra);}
-            System.out.println();
-            for(int fila =0; fila<5; fila++){ 
-                System.out.printf("\t|");
-                for(int columna = 0; columna<5; columna++){
-                    System.out.printf("  %s\t|", temp[fila][columna]);
-                }
-                System.out.println();
-            }
-            System.out.println();
+        cartones.add(new Tablero());
+        if(aleatorio == 1){
+            Tablero ec = new Tablero();
+            ec.setTable(Tablero.llenar_tablero_aletorio());
+            ec.carton();
+            cartones.add(ec);
         }
+        else{
+            Tablero ec = new Tablero();
+            ec.setTable(Tablero.llenar_tablero_personalizado());
+            ec.carton();
+            cartones.add(ec);
+        }
+        String[][] tablero_completo = crearMultiplesTablas(1);
+        Tablero.imprimir_tablero(tablero_completo);
     }
-}
+}   
