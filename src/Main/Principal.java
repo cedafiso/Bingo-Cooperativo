@@ -11,7 +11,7 @@ public class Principal {
         ArrayList <Nino> U_menores = new ArrayList<Nino>();
         String nombre, nick, sexo;
         int edad, fichas, C_cartones, C_aleatorios;
-
+        //Si se descomepntarea el segundo salir, no entrará al menú (Para pruebas especificas)
         boolean salir = false; //salir = true;
         Adulto usuario_a;
         Nino usuario_b;
