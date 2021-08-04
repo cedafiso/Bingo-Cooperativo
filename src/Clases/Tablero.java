@@ -6,6 +6,7 @@ public class Tablero {
     private int[][] table = new int[5][6];
     private String[][] table_final = new String[6][6];
     static private Scanner input = new Scanner(System.in);
+    public static String Letras[] = {"B","I","N","G","O"};
     //table_final es la matriz que se usara para juntar en la matriz completa
 
     public Tablero(){
@@ -122,5 +123,14 @@ public class Tablero {
              }
             }
             return table;
+    }
+    public boolean existe(String valores[]){
+        for (int i=1; i<6; i++) {
+            if(table_final[i][Integer.parseInt(valores[i])].equals(valores[1])){
+                table_final[i][Integer.parseInt(valores[i])] = "X";
+                return true;
+            }
+        }
+        return false;
     }
 }

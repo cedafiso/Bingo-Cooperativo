@@ -1,11 +1,13 @@
 package Clases;
 
 import java.util.ArrayList;
+import Main.Principal;
 
 public class Partida {
     private Adulto usuario_a;
     private Nino usuario_b;
     private ArrayList <Tablero> cartones = new ArrayList<Tablero>();
+    private int memoria[][] = new int[15][5];
     
     public ArrayList<Tablero> getCartones() {
         return cartones;
@@ -39,8 +41,31 @@ public class Partida {
                 cartones.add(ec);
             }
         }
-        String[][] tablero_completo = crearMultiplesTablas(n_tableros);
-        Tablero.imprimir_tablero(tablero_completo);
+        while(true){
+            String[][] tablero_completo = crearMultiplesTablas(n_tableros);
+            Tablero.imprimir_tablero(tablero_completo);
+            String balota[] = balota();
+            System.out.print("Digite los tableros que tienen la letra con el valor (separado por comas): ");
+            String valores[] = Principal.sc.nextLine().replaceAll(" ","").split(",");
+            if(valores.length == 1 && Integer.parseInt(valores[0])==0){
+                System.out.println("Siguiente balota!!");
+            }else if(valores.length == 1 && valores[0].equalsIgnoreCase("s")){
+                System.out.println("Salir");
+                verificar_victoria();
+                break;
+            }else{
+                for (String carton : valores) {
+                    if(Integer.parseInt(carton) <= cartones.size()){
+                        if(cartones.get(Integer.parseInt(carton)-1).existe(balota)){
+                            System.out.println("Correcto");
+                        }else{System.out.println("Error");}
+                    }else{
+                        System.out.println("El carton no existe");
+                    }
+                }
+            }
+            Principal.pausa();
+        }
     } 
     public String[][] crearMultiplesTablas(int cantidad){
         ArrayList<ArrayList<String>> tablero_completo = new ArrayList<ArrayList<String>>();
@@ -78,5 +103,30 @@ public class Partida {
         }
         String[][] tablero_completo = crearMultiplesTablas(1);
         Tablero.imprimir_tablero(tablero_completo);
+    }
+
+    public String[] balota(){
+        int columna = (int)(Math.random()*(5)+1);
+        int indice = columna-1;
+        int num = 0;
+        int inferior = (indice*15)+1;
+        int superior = (indice*15)+15;
+
+        while(true){
+            int n = (int)(Math.random()*(superior-inferior+1)+inferior);
+            int indice2 = (n-1)-(15*indice);
+            if(memoria[indice2][indice] == 0 && n<=superior && n>=inferior){
+                memoria[indice2][indice] = 1;
+                num = n;
+                break;
+            }
+        }
+
+        System.out.printf("Balota: %s%d\n",Tablero.Letras[indice], num);
+        String balota[] = {indice+"", num+""};
+        return balota;
+    }
+    public void verificar_victoria(){
+
     }
 }   
