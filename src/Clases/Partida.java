@@ -149,7 +149,7 @@ public class Partida {
         return balota;
     }
     public void Calcular_puntaje(){
-        System.out.println("Game over");
+        
     }
     public ArrayList<Integer> verificar_horizontal(Tablero tablero){ ///Verificador horizontal, se usa en las filas
         ArrayList<Integer> indexes = new ArrayList<>();
@@ -203,6 +203,15 @@ public class Partida {
         ArrayList<Integer> filas = verificar_horizontal(tablero);
         ArrayList<Integer> columnas = verificar_verticales(tablero);
         if(columnas.contains(0) && columnas.contains(4) && filas.contains(5)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean verificar_tablero_BINGO(Tablero tablero){
+        ArrayList<Integer> filas = verificar_horizontal(tablero);
+        ArrayList<Integer> columnas = verificar_verticales(tablero);
+        if(columnas.size() == 5 && filas.size() == 5){
             return true;
         }else{
             return false;
