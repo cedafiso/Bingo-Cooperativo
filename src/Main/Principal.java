@@ -11,7 +11,7 @@ public class Principal {
         ArrayList <Nino> U_menores = new ArrayList<Nino>();
         String nombre, nick, sexo;
         int edad, fichas, C_cartones, C_aleatorios;
-        //Si se descomepntarea el segundo salir, no entrará al menú (Para pruebas especificas)
+        //Si se descomentarea el segundo salir, no entrará al menú (Para pruebas especificas)
         boolean salir = false; //salir = true;
         Adulto usuario_a;
         Nino usuario_b;
@@ -111,15 +111,18 @@ public class Principal {
 
                 case "3": //Ver top ten
                     ordenamiento(U_mayores,U_menores);
-                    System.out.println("TOP TEN USUARIOS +18");
+                    System.out.println("\t| TOP TEN USUARIOS +18 |");
+                    System.out.println("\t+----------------------+");
                     for(int i=0; i<10; i++) {
-                        if(i>=U_mayores.size()){System.out.printf("%d> --------------\n",(i+1));}
-                        else{System.out.printf("%d> %s ----> %d fichas\n",(i+1), U_mayores.get(i).getNombre(), U_mayores.get(i).getFichas());}
+                        if(i>=U_mayores.size()){System.out.printf("\t%d> -----------------<\n",(i+1));}
+                        else{System.out.printf("\t%d> %s -> %d fichas\n",(i+1), U_mayores.get(i).getNombre(), U_mayores.get(i).getFichas());}
                     }
-                    System.out.println("\nTOP TEN USUARIOS -18");
+                    pausa();
+                    System.out.println("\n\t| TOP TEN USUARIOS -18 |");
+                    System.out.println("\t+----------------------+");
                     for(int i=0; i<10; i++) {
-                        if(i>=U_mayores.size()){System.out.printf("%d> --------------\n",(i+1));}
-                        else{System.out.printf("%d> %s ----> %d fichas\n",(i+1), U_menores.get(i).getNombre(), U_menores.get(i).getFichas());}
+                        if(i>=U_menores.size()){System.out.printf("\t%d> -----------------<\n",(i+1));}
+                        else{System.out.printf("\t%d> %s -> %d fichas\n",(i+1), U_menores.get(i).getNombre(), U_menores.get(i).getFichas());}
                     }
                     pausa();
                     break;
@@ -254,6 +257,7 @@ public class Principal {
                     mayores.set(j, usuario_a);
                 }
             }
+            if(i == 9){break;}
         }
 
         for(int i = 0; i<(menores.size()-1); i++){
@@ -264,6 +268,7 @@ public class Principal {
                     menores.set(j, usuario_b);
                 }
             }
+            if(i == 9){break;}
         }
     }
 }
