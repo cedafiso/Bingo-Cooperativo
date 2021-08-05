@@ -191,5 +191,22 @@ public class Partida {
             return false;
         }
     }
+    public boolean verificar_o(Tablero tablero){
+        ArrayList<Integer> columnas = verificar_verticales(tablero);
+        if(verificar_c(tablero) && columnas.contains(4)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public boolean verificar_u(Tablero tablero){
+        ArrayList<Integer> filas = verificar_horizontal(tablero);
+        ArrayList<Integer> columnas = verificar_verticales(tablero);
+        if(columnas.contains(0) && columnas.contains(4) && filas.contains(5)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
 }   
