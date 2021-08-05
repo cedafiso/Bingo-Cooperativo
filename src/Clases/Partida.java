@@ -151,7 +151,7 @@ public class Partida {
     public void Calcular_puntaje(){
         System.out.println("Game over");
     }
-    public ArrayList<Integer> verificar_horizontal(Tablero tablero){
+    public ArrayList<Integer> verificar_horizontal(Tablero tablero){ ///Verificador horizontal, se usa en las filas
         ArrayList<Integer> indexes = new ArrayList<>();
         for(int i = 1; i<tablero.getTable_final().length-1;i++){
             boolean verificador = true;
@@ -164,9 +164,9 @@ public class Partida {
             indexes.add(i);
             }
         }
-        return indexes;
+        return indexes; //Devolvera el index de las filas que cumplen con la condición de ser toda igual a "X"
     }
-    public ArrayList<Integer> verificar_verticales(Tablero tablero){
+    public ArrayList<Integer> verificar_verticales(Tablero tablero){ ///Verificador para verticales, se usa en las columnas
         ArrayList<Integer> indexes = new ArrayList<>();
         for(int i = 0; i<tablero.getTable_final()[0].length-1;i++){
             boolean verificador = true;
@@ -179,8 +179,17 @@ public class Partida {
                 indexes.add(i);
                 }
         }
-        return indexes;
+        return indexes;///Devolvera el index de las columnas que cumplen con la condición de ser toda igual a "X"
 
+    }
+    public boolean verificar_c(Tablero tablero){
+        ArrayList<Integer> filas = verificar_horizontal(tablero);
+        ArrayList<Integer> columnas = verificar_verticales(tablero);
+        if(columnas.contains(0) && filas.contains(1) && filas.contains(5)){
+            return true;
+        }else{
+            return false;
+        }
     }
     
 }   
