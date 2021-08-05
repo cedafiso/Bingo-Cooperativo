@@ -110,9 +110,18 @@ public class Principal {
                     break;
 
                 case "3": //Ver top ten
+                    ordenamiento(U_mayores,U_menores);
                     System.out.println("TOP TEN USUARIOS +18");
-
-                    System.out.println("TOP TEN USUARIOS -18");
+                    for(int i=0; i<10; i++) {
+                        if(i>=U_mayores.size()){System.out.printf("%d> --------------\n",(i+1));}
+                        else{System.out.printf("%d> %s ----> %d fichas\n",(i+1), U_mayores.get(i).getNombre(), U_mayores.get(i).getFichas());}
+                    }
+                    System.out.println("\nTOP TEN USUARIOS -18");
+                    for(int i=0; i<10; i++) {
+                        if(i>=U_mayores.size()){System.out.printf("%d> --------------\n",(i+1));}
+                        else{System.out.printf("%d> %s ----> %d fichas\n",(i+1), U_menores.get(i).getNombre(), U_menores.get(i).getFichas());}
+                    }
+                    pausa();
                     break;
 
                 case "4": //Canjear premios
@@ -235,14 +244,26 @@ public class Principal {
     }
 
     public static void ordenamiento(ArrayList <Adulto> mayores, ArrayList <Nino> menores){
+        Adulto usuario_a;
+        Nino   usuario_b;
         for(int i = 0; i<(mayores.size()-1); i++){
             for(int j = i+1; j<mayores.size(); j++){
-                
+                if(mayores.get(i).getFichas() < mayores.get(j).getFichas()){
+                    usuario_a = mayores.get(i);
+                    mayores.set(i, mayores.get(j));
+                    mayores.set(j, usuario_a);
+                }
             }
         }
 
         for(int i = 0; i<(menores.size()-1); i++){
-
+            for(int j = i+1; j<menores.size(); j++){
+                if(menores.get(i).getFichas() < menores.get(j).getFichas()){
+                    usuario_b = menores.get(i);
+                    menores.set(i, menores.get(j));
+                    menores.set(j, usuario_b);
+                }
+            }
         }
     }
 }
