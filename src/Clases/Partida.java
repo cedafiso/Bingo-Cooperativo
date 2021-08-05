@@ -154,14 +154,33 @@ public class Partida {
     public ArrayList<Integer> verificar_horizontal(Tablero tablero){
         ArrayList<Integer> indexes = new ArrayList<>();
         for(int i = 1; i<tablero.getTable_final().length-1;i++){
+            boolean verificador = true;
             for(int j = 0; j<tablero.getTable_final()[0].length-1;j++){
                 if(!tablero.getTable_final()[i][j].equals("X")){
-                    return indexes;
+                    verificador = false;
                 }
             }
+            if (verificador){
             indexes.add(i);
+            }
+        }
+        return indexes;
+    }
+    public ArrayList<Integer> verificar_verticales(Tablero tablero){
+        ArrayList<Integer> indexes = new ArrayList<>();
+        for(int i = 0; i<tablero.getTable_final()[0].length-1;i++){
+            boolean verificador = true;
+            for(int j = 1; j<tablero.getTable_final().length-1;j++){
+                if(!tablero.getTable_final()[j][i].equals("X")){
+                    verificador = false;
+                }
+            }
+            if (verificador){
+                indexes.add(i);
+                }
         }
         return indexes;
 
     }
+    
 }   
