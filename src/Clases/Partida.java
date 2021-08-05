@@ -151,4 +151,17 @@ public class Partida {
     public void Calcular_puntaje(){
         System.out.println("Game over");
     }
+    public ArrayList<Integer> verificar_horizontal(Tablero tablero){
+        ArrayList<Integer> indexes = new ArrayList<>();
+        for(int i = 1; i<tablero.getTable_final().length-1;i++){
+            for(int j = 0; j<tablero.getTable_final()[0].length-1;j++){
+                if(!tablero.getTable_final()[i][j].equals("X")){
+                    return indexes;
+                }
+            }
+            indexes.add(i);
+        }
+        return indexes;
+
+    }
 }   
