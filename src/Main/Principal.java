@@ -71,7 +71,7 @@ public class Principal {
                                 if(usuario_a.getFichas() < 500){System.out.println("No tiene fichas suficientes para comprar un tablero, comuniquese con nuestra linea de soporte!!");}
                                 else{
                                     do{
-                                        System.out.print("Digite la cantidad de cartones para jugar, recuerde, cada carton vale 500 fichas y maximo se puede tener 4 cartones por partida: ");
+                                        System.out.print("\nDigite la cantidad de cartones para jugar, recuerde, cada carton vale 500 fichas y maximo se puede tener 4 cartones por partida: ");
                                         C_cartones = Integer.parseInt(sc.nextLine());
                                         System.out.print("Digite la cantidad de cartones que se generarán con números aleatorios: ");
                                         C_aleatorios = Integer.parseInt(sc.nextLine());
@@ -79,9 +79,14 @@ public class Principal {
                                         if(C_cartones > 4 || C_cartones < 1 || C_aleatorios < 0 || C_aleatorios > C_cartones){
                                             System.out.println("\nError, verifique que las dos cantidades no sean negativas, que la cantidad de cartones no sea mayor a 4 y que la cantidad de cartones generados aleatoriamente no sobrepasen los cartones con los que va a jugar!!");
                                             pausa();
+                                        } else if(C_cartones*500 > usuario_a.getFichas()){
+                                            System.out.printf("No tiene fichas suficientes para comprar %d tablero/s, intente de nuevo\n", C_cartones);
+                                            C_cartones = 0;
+                                            pausa();
                                         }
                                     }while(C_cartones > 4 || C_cartones < 1 || C_aleatorios < 0 || C_aleatorios > C_cartones);
                                     
+                                    usuario_a.setFichas(usuario_a.getFichas()-(C_cartones*500));
                                     p_actual = new Partida(usuario_a);
                                     p_actual.jugar(C_cartones, C_aleatorios);
                                 }
@@ -99,6 +104,7 @@ public class Principal {
                                     }
                                     }while(C_aleatorios != 0 && C_aleatorios != 1);
                                     
+                                    usuario_b.setFichas(usuario_b.getFichas()-500);
                                     p_actual = new Partida(usuario_b);
                                     p_actual.jugar(C_aleatorios);
                                 }

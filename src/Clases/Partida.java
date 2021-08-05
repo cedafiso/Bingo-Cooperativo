@@ -45,22 +45,24 @@ public class Partida {
             String[][] tablero_completo = crearMultiplesTablas(n_tableros);
             Tablero.imprimir_tablero(tablero_completo);
             String balota[] = balota();
+            System.out.println(">    s: Salir    ; 0: Siguiente valota");
             System.out.print("Digite los tableros que tienen la letra con el valor (separado por comas): ");
             String valores[] = Principal.sc.nextLine().replaceAll(" ","").split(",");
             if(valores.length == 1 && valores[0].equals("0")){
                 System.out.println("Siguiente balota!!");
             }else if(valores.length == 1 && valores[0].equalsIgnoreCase("s")){
                 System.out.println("Salir");
-                verificar_victoria();
+                Calcular_puntaje();
                 break;
             }else{
                 for (String carton : valores) {
                     if(Integer.parseInt(carton) <= cartones.size()){
-                        if(cartones.get(Integer.parseInt(carton)-1).existe(balota)){
-                            System.out.println("Correcto");
-                        }else{System.out.println("Error");}
+                        if(!cartones.get(Integer.parseInt(carton)-1).existe(balota)){
+                            System.out.printf("Penalización!!, ese valor no está en el tablero %s, se le descontará una ficha.\n", carton);
+                            usuario_a.setFichas(usuario_a.getFichas()-1);
+                        }
                     }else{
-                        System.out.println("El carton no existe");
+                        System.out.printf("El carton %d no existe\n", carton);
                     }
                 }
             }
@@ -101,8 +103,28 @@ public class Partida {
             ec.carton();
             cartones.add(ec);
         }
-        String[][] tablero_completo = crearMultiplesTablas(1);
-        Tablero.imprimir_tablero(tablero_completo);
+
+        while(true){
+            String[][] tablero_completo = crearMultiplesTablas(1);
+            Tablero.imprimir_tablero(tablero_completo);
+            String balota[] = balota();
+            System.out.println(">   s: Salir   ;   0: Siguiente valota   ;   1: Si");
+            System.out.print("Digite 1 si la letra y el valor se encuentrar en su tablero: ");
+            String valor = Principal.sc.nextLine().replaceAll(" ","");
+            if(valor.equals("0")){
+                System.out.println("Siguiente balota!!");
+            }else if(valor.equalsIgnoreCase("s")){
+                System.out.println("Salir");
+                Calcular_puntaje();
+                break;
+            }else{
+                if(!cartones.get(0).existe(balota)){
+                    System.out.println("Penalización!!, ese valor no está en tu tablero, se te descontará una ficha.");
+                    usuario_b.setFichas(usuario_b.getFichas()-1);
+                }
+            }
+            Principal.pausa();
+        }
     }
 
     public String[] balota(){
@@ -126,7 +148,7 @@ public class Partida {
         String balota[] = {indice+"", num+""};
         return balota;
     }
-    public void verificar_victoria(){
+    public void Calcular_puntaje(){
         System.out.println("Game over");
     }
 }   
