@@ -153,7 +153,7 @@ public class Partida {
     }
     public ArrayList<Integer> verificar_horizontal(Tablero tablero){ ///Verificador horizontal, se usa en las filas
         ArrayList<Integer> indexes = new ArrayList<>();
-        for(int i = 1; i<tablero.getTable_final().length-1;i++){
+        for(int i = 1; i<tablero.getTable_final().length;i++){
             boolean verificador = true;
             for(int j = 0; j<tablero.getTable_final()[0].length-1;j++){
                 if(!tablero.getTable_final()[i][j].equals("X")){
@@ -170,7 +170,7 @@ public class Partida {
         ArrayList<Integer> indexes = new ArrayList<>();
         for(int i = 0; i<tablero.getTable_final()[0].length-1;i++){
             boolean verificador = true;
-            for(int j = 1; j<tablero.getTable_final().length-1;j++){
+            for(int j = 1; j<tablero.getTable_final().length;j++){
                 if(!tablero.getTable_final()[j][i].equals("X")){
                     verificador = false;
                 }
