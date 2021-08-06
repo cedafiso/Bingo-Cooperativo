@@ -51,7 +51,7 @@ public class Partida {
             if(valores.length == 1 && valores[0].equals("0")){
                 System.out.println("Siguiente balota!!");
             }else if(valores.length == 1 && valores[0].equalsIgnoreCase("s")){
-                System.out.println("Salir");
+                System.out.println("GAME OVER");
                 Calcular_puntaje();
                 break;
             }else{
@@ -114,7 +114,7 @@ public class Partida {
             if(valor.equals("0")){
                 System.out.println("Siguiente balota!!");
             }else if(valor.equalsIgnoreCase("s")){
-                System.out.println("Salir");
+                System.out.println("GAME OVER");
                 Calcular_puntaje();
                 break;
             }else{
@@ -149,8 +149,49 @@ public class Partida {
         return balota;
     }
     public void Calcular_puntaje(){
+        int fichas = 0;    //Variable acumuladora
+
+        for (Tablero carton : cartones) {  //recorremos cada tablero
+            if(verificar_tablero_BINGO(carton)){  //bingo
+                if(usuario_a != null){fichas += 10000;}  //Si el usuario es mayor de edad
+                else{fichas += 5000;}                    //Si el usuario es menor de edad
+
+            }else if(verificar_o(carton)){  //O
+                if(usuario_a != null){fichas += 2000;}
+                else{
+                    if(usuario_b.getEdad() < 10){fichas += 1000;} //Si el menor de edad tiene menos de 10 años
+                    else{fichas += 900;}                          //Si es menor de edad pero al menos tiene 10 años
+                }
+
+            }else if(verificar_u(carton)){  //U
+                if(usuario_a != null){fichas += 1500;}           //Solo los adultos reciben fichas por esta figura
+
+            }/* else if(verificar_o(carton)){  //X
+                if(usuario_a != null){fichas += 1200;}
+                else{fichas += 800;}
+
+            } */else if(verificar_c(carton)){  //C  
+                if(usuario_a != null){fichas += 1000;}             //Solo los adultos reciben fichas por esta figura
+
+            }/* else if(verificar_o(carton)){  //Diagonal
+                if(usuario_a != null){fichas += 800;}
+                else{fichas += 450;}
+
+            } */else if(verificar_horizontal(carton).size()>0 || verificar_verticales(carton).size()>0){  //Linea 
+                if(usuario_a != null){fichas += 400;}
+                else{fichas += 200;}
+            }
+        }
+
+        if(fichas > 0){   // si ganó fichas
+            System.out.printf("Felicidades usted ganó %d fichas!!\n", fichas);
+            if(usuario_a != null){usuario_a.setFichas(usuario_a.getFichas()+fichas);}
+            else{usuario_b.setFichas(usuario_b.getFichas()+fichas);}
+
+        }else{System.out.println("No ganó fichas");}
         
     }
+
     public ArrayList<Integer> verificar_horizontal(Tablero tablero){ ///Verificador horizontal, se usa en las filas
         ArrayList<Integer> indexes = new ArrayList<>();
         for(int i = 1; i<tablero.getTable_final().length;i++){
