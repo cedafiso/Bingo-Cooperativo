@@ -8,6 +8,7 @@ public class Partida {
     private Nino usuario_b;
     private ArrayList <Tablero> cartones = new ArrayList<Tablero>();
     private int memoria[][] = new int[15][5];
+    private int mem_columna[] = new int[5];
     
     public ArrayList<Tablero> getCartones() {
         return cartones;
@@ -26,6 +27,8 @@ public class Partida {
     }
     //--->Metodos especificos 
     public void jugar(int n_tableros, int n_aleatorios){//Para adultos
+        usuario_a.setP_jugadas(usuario_a.getP_jugadas()+1);
+
         for(int i=0; i<n_tableros; i++){
             if(n_aleatorios > 0){
                 n_aleatorios--;
@@ -41,18 +44,20 @@ public class Partida {
                 cartones.add(ec);
             }
         }
-        while(true){
+
+        //String ya_salieron ="";  //Variable de verificación balotas que ya salieron
+        while(!todos_los_numeros()){
             String[][] tablero_completo = crearMultiplesTablas(n_tableros);
             Tablero.imprimir_tablero(tablero_completo);
+            //System.out.println(ya_salieron);       //Verificación de las valotas que ya salieron
             String balota[] = balota();
+            //ya_salieron += Tablero.Letras[Integer.parseInt(balota[0])]+balota[1]+" "; //Agregue la balota recien salida
             System.out.println(">    s: Salir    ; 0: Siguiente valota");
             System.out.print("Digite los tableros que tienen la letra con el valor (separado por comas): ");
             String valores[] = Principal.sc.nextLine().replaceAll(" ","").split(",");
             if(valores.length == 1 && valores[0].equals("0")){
                 System.out.println("Siguiente balota!!");
             }else if(valores.length == 1 && valores[0].equalsIgnoreCase("s")){
-                System.out.println("GAME OVER");
-                Calcular_puntaje();
                 break;
             }else{
                 for (String carton : valores) {
@@ -68,6 +73,14 @@ public class Partida {
             }
             Principal.pausa();
         }
+        String[][] tablero_completo = crearMultiplesTablas(n_tableros);
+        Tablero.imprimir_tablero(tablero_completo);
+         
+        /* System.out.println(ya_salieron);     //Verificación de ejecución correcta
+        System.out.println(ya_salieron.split(" ").length); */ //Verificación de ejecución correcta (salida esperada 75)
+
+        System.out.println("\n\tGAME OVER");
+        Calcular_puntaje();
     } 
     public String[][] crearMultiplesTablas(int cantidad){
         ArrayList<ArrayList<String>> tablero_completo = new ArrayList<ArrayList<String>>();
@@ -90,6 +103,8 @@ public class Partida {
     } 
 
     public void jugar(int aleatorio){                      //Para niños
+        usuario_b.setP_jugadas(usuario_b.getP_jugadas()+1);
+
         cartones.add(new Tablero());
         if(aleatorio == 1){
             Tablero ec = new Tablero();
@@ -104,18 +119,19 @@ public class Partida {
             cartones.add(ec);
         }
 
-        while(true){
+        //String ya_salieron ="";  //Variable de verificación balotas que ya salieron
+        while(!todos_los_numeros()){
             String[][] tablero_completo = crearMultiplesTablas(1);
             Tablero.imprimir_tablero(tablero_completo);
+            //System.out.println(ya_salieron);       //Verificación de las valotas que ya salieron
             String balota[] = balota();
+            //ya_salieron += Tablero.Letras[Integer.parseInt(balota[0])]+balota[1]+" "; //Agregue la balota recien salida
             System.out.println(">   s: Salir   ;   0: Siguiente valota   ;   1: Si");
             System.out.print("Digite 1 si la letra y el valor se encuentrar en su tablero: ");
             String valor = Principal.sc.nextLine().replaceAll(" ","");
             if(valor.equals("0")){
                 System.out.println("Siguiente balota!!");
             }else if(valor.equalsIgnoreCase("s")){
-                System.out.println("GAME OVER");
-                Calcular_puntaje();
                 break;
             }else{
                 if(!cartones.get(0).existe(balota)){
@@ -125,12 +141,27 @@ public class Partida {
             }
             Principal.pausa();
         }
+        String[][] tablero_completo = crearMultiplesTablas(1);
+        Tablero.imprimir_tablero(tablero_completo);
+
+        /* System.out.println(ya_salieron);     //Verificación de ejecución correcta
+        System.out.println(ya_salieron.split(" ").length); */ //Verificación de ejecución correcta (salida esperada 75)
+        
+        System.out.println("\n\tGAME OVER");
+        Calcular_puntaje();
     }
 
-    public String[] balota(){
-        int columna = (int)(Math.random()*(5)+1);
-        int indice = columna-1;
-        int num = 0;
+    public String[] balota(){    
+        int columna, indice;
+        while(true){
+            columna = (int)(Math.random()*(5)+1);
+            indice = columna-1;
+            if(mem_columna[indice] == 0){
+                break;
+            }
+        }
+        //System.out.println("->");  //Seña para saber que salió del primer for
+        int num;
         int inferior = (indice*15)+1;
         int superior = (indice*15)+15;
 
@@ -144,9 +175,25 @@ public class Partida {
             }
         }
 
+        boolean c_llena = true;
+        for (int i = 0; i < 15; i++) {
+            if(memoria[i][indice]==0){
+                c_llena = false;
+                break;
+            }
+        }
+        if(c_llena){mem_columna[indice]=1;}
+
         System.out.printf("Balota: %s%d\n",Tablero.Letras[indice], num);
         String balota[] = {indice+"", num+""};
         return balota;
+    }
+
+    public boolean todos_los_numeros(){
+        for (int columna : mem_columna) {
+            if(columna == 0){return false;}
+        }
+        return true;
     }
     public void Calcular_puntaje(){
         int fichas = 0;    //Variable acumuladora
@@ -184,11 +231,11 @@ public class Partida {
         }
 
         if(fichas > 0){   // si ganó fichas
-            System.out.printf("Felicidades usted ganó %d fichas!!\n", fichas);
+            System.out.printf("\n¡¡Felicidades usted ganó %d fichas!!\n", fichas);
             if(usuario_a != null){usuario_a.setFichas(usuario_a.getFichas()+fichas);}
             else{usuario_b.setFichas(usuario_b.getFichas()+fichas);}
 
-        }else{System.out.println("No ganó fichas");}
+        }else{System.out.println("\nNo ganó fichas");}
         
     }
 
