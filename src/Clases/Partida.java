@@ -25,8 +25,11 @@ public class Partida {
         this.usuario_b = usuario_b;
         usuario_a = null;
     }
-    //--->Metodos especificos 
-    public void jugar(int n_tableros, int n_aleatorios){//Para adultos
+    
+    //***************** METODOS ESPECIFICOS *********************
+
+    //----------->METODO SOBRECARGADO JUGAR PARA ADULTOS<-----------
+    public void jugar(int n_tableros, int n_aleatorios){
         usuario_a.setP_jugadas(usuario_a.getP_jugadas()+1);
 
         for(int i=0; i<n_tableros; i++){
@@ -111,10 +114,10 @@ public class Partida {
         return table_prueba;
     } 
 
-    public void jugar(int aleatorio){                      //Para niños
+    //----------->METODO SOBRECARGADO JUGAR PARA NIÑOS<-----------
+    public void jugar(int aleatorio){                      
         usuario_b.setP_jugadas(usuario_b.getP_jugadas()+1);
 
-        cartones.add(new Tablero());
         if(aleatorio == 1){
             Tablero ec = new Tablero();
             ec.setTable(Tablero.llenar_tablero_aletorio());
@@ -128,10 +131,9 @@ public class Partida {
             cartones.add(ec);
         }
 
-        boolean salir = false, error = false;
+        boolean salir = false;
         //String ya_salieron ="";  //Variable de verificación balotas que ya salieron
         while(!todos_los_numeros()){
-            error = false;
             String[][] tablero_completo = crearMultiplesTablas(1);
             Tablero.imprimir_tablero(tablero_completo);
             //System.out.println(ya_salieron);       //Verificación de las valotas que ya salieron
@@ -150,11 +152,9 @@ public class Partida {
                 if(!cartones.get(0).existe(balota)){
                     System.out.printf("Penalización!!, ese valor no está en su tablero, se le descontará una ficha.\n");
                     usuario_b.setFichas(usuario_b.getFichas()-1);
-                    error = true;
+                    Principal.pausa();
                 }
-                
             }
-            if(error){Principal.pausa();}
         }
 
         if(!salir){
