@@ -45,19 +45,23 @@ public class Partida {
             }
         }
 
+        boolean salir = false, error = false;
         //String ya_salieron ="";  //Variable de verificación balotas que ya salieron
         while(!todos_los_numeros()){
+            error = false;
             String[][] tablero_completo = crearMultiplesTablas(n_tableros);
             Tablero.imprimir_tablero(tablero_completo);
             //System.out.println(ya_salieron);       //Verificación de las valotas que ya salieron
             String balota[] = balota();
             //ya_salieron += Tablero.Letras[Integer.parseInt(balota[0])]+balota[1]+" "; //Agregue la balota recien salida
-            System.out.println(">    s: Salir    ; 0: Siguiente valota");
+            System.out.println("| > s: Salir  | > 0: Siguiente balota  |");
             System.out.print("Digite los tableros que tienen la letra con el valor (separado por comas): ");
             String valores[] = Principal.sc.nextLine().replaceAll(" ","").split(",");
+            System.out.println();
             if(valores.length == 1 && valores[0].equals("0")){
-                System.out.println("Siguiente balota!!");
+                continue;
             }else if(valores.length == 1 && valores[0].equalsIgnoreCase("s")){
+                salir = true;
                 break;
             }else{
                 for (String carton : valores) {
@@ -65,16 +69,21 @@ public class Partida {
                         if(!cartones.get(Integer.parseInt(carton)-1).existe(balota)){
                             System.out.printf("Penalización!!, ese valor no está en el tablero %s, se le descontará una ficha.\n", carton);
                             usuario_a.setFichas(usuario_a.getFichas()-1);
+                            error = true;
                         }
                     }else{
-                        System.out.printf("El carton %d no existe\n", carton);
+                        System.out.printf("El carton %s no existe\n", carton);
+                        error = true;
                     }
                 }
             }
-            Principal.pausa();
+            if(error){Principal.pausa();}
         }
-        String[][] tablero_completo = crearMultiplesTablas(n_tableros);
-        Tablero.imprimir_tablero(tablero_completo);
+
+        if(!salir){
+            String[][] tablero_completo = crearMultiplesTablas(n_tableros);
+            Tablero.imprimir_tablero(tablero_completo);
+        }
          
         /* System.out.println(ya_salieron);     //Verificación de ejecución correcta
         System.out.println(ya_salieron.split(" ").length); */ //Verificación de ejecución correcta (salida esperada 75)
@@ -119,34 +128,43 @@ public class Partida {
             cartones.add(ec);
         }
 
+        boolean salir = false, error = false;
         //String ya_salieron ="";  //Variable de verificación balotas que ya salieron
         while(!todos_los_numeros()){
+            error = false;
             String[][] tablero_completo = crearMultiplesTablas(1);
             Tablero.imprimir_tablero(tablero_completo);
             //System.out.println(ya_salieron);       //Verificación de las valotas que ya salieron
             String balota[] = balota();
             //ya_salieron += Tablero.Letras[Integer.parseInt(balota[0])]+balota[1]+" "; //Agregue la balota recien salida
-            System.out.println(">   s: Salir   ;   0: Siguiente valota   ;   1: Si");
-            System.out.print("Digite 1 si la letra y el valor se encuentrar en su tablero: ");
+            System.out.println("| > s: Salir  | > 0: Siguiente balota  |");
+            System.out.print("Digite 1 si su tablero tiene la letra con el valor: ");
             String valor = Principal.sc.nextLine().replaceAll(" ","");
+            System.out.println();
             if(valor.equals("0")){
-                System.out.println("Siguiente balota!!");
+                continue;
             }else if(valor.equalsIgnoreCase("s")){
+                salir = true;
                 break;
-            }else{
+            }else{  
                 if(!cartones.get(0).existe(balota)){
-                    System.out.println("Penalización!!, ese valor no está en tu tablero, se te descontará una ficha.");
+                    System.out.printf("Penalización!!, ese valor no está en su tablero, se le descontará una ficha.\n");
                     usuario_b.setFichas(usuario_b.getFichas()-1);
+                    error = true;
                 }
+                
             }
-            Principal.pausa();
+            if(error){Principal.pausa();}
         }
-        String[][] tablero_completo = crearMultiplesTablas(1);
-        Tablero.imprimir_tablero(tablero_completo);
 
+        if(!salir){
+            String[][] tablero_completo = crearMultiplesTablas(1);
+            Tablero.imprimir_tablero(tablero_completo);
+        }
+         
         /* System.out.println(ya_salieron);     //Verificación de ejecución correcta
         System.out.println(ya_salieron.split(" ").length); */ //Verificación de ejecución correcta (salida esperada 75)
-        
+
         System.out.println("\n\tGAME OVER");
         Calcular_puntaje();
     }
@@ -184,7 +202,7 @@ public class Partida {
         }
         if(c_llena){mem_columna[indice]=1;}
 
-        System.out.printf("Balota: %s%d\n",Tablero.Letras[indice], num);
+        System.out.printf("\n|   Balota: %s%d   |\n",Tablero.Letras[indice], num);
         String balota[] = {indice+"", num+""};
         return balota;
     }

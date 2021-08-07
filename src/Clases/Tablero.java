@@ -41,7 +41,7 @@ public class Tablero {
     static public void imprimir_tablero(String[][] table){
         for (int i = 0; i<table.length;i++){
             System.out.println();
-            System.out.println("--------------------");
+            //System.out.println("--------------------");
             for( int j = 0;j<table[i].length-1;j++){
                 if(((j+1) % 6 == 0) && j != 0){
                     System.out.print("| ");
@@ -54,7 +54,7 @@ public class Tablero {
             System.out.print("|");
         }
         System.out.println();
-        System.out.println("--------------------");
+        //System.out.println("--------------------");
     }
    public static int[][] llenar_tablero_aletorio(){
     int[][] table = new int[5][6];
