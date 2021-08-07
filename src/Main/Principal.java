@@ -117,18 +117,14 @@ public class Principal {
 
                 case "3": //Ver top ten
                     ordenamiento(U_mayores,U_menores);
-                    System.out.println("\t| TOP TEN USUARIOS +18 |");
-                    System.out.println("\t+----------------------+");
+                    System.out.println("\t| TOP TEN USUARIOS +18 |\t| TOP TEN USUARIOS -18 |");
+                    System.out.println("\t+----------------------+\t+----------------------+");
                     for(int i=0; i<10; i++) {
-                        if(i>=U_mayores.size()){System.out.printf("\t%d> -----------------<\n",(i+1));}
-                        else{System.out.printf("\t%d> %s -> %d fichas\n",(i+1), U_mayores.get(i).getNombre(), U_mayores.get(i).getFichas());}
-                    }
-                    pausa();
-                    System.out.println("\n\t| TOP TEN USUARIOS -18 |");
-                    System.out.println("\t+----------------------+");
-                    for(int i=0; i<10; i++) {
-                        if(i>=U_menores.size()){System.out.printf("\t%d> -----------------<\n",(i+1));}
-                        else{System.out.printf("\t%d> %s -> %d fichas\n",(i+1), U_menores.get(i).getNombre(), U_menores.get(i).getFichas());}
+                        if(i>=U_mayores.size()){System.out.printf("\t%d> -----------------<   ",(i+1));}
+                        else{System.out.printf("\t%d> %s -> %d fichas    ",(i+1), U_mayores.get(i).getNombre(), U_mayores.get(i).getFichas());}
+
+                        if(i>=U_menores.size()){System.out.printf("\t%d> -----------------<   \n",(i+1));}
+                        else{System.out.printf("\t%d> %s -> %d fichas    \n",(i+1), U_menores.get(i).getNombre(), U_menores.get(i).getFichas());}
                     }
                     pausa();
                     break;
