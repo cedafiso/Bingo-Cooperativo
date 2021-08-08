@@ -323,5 +323,31 @@ public class Partida {
             return false;
         }
     }
+
+    public boolean verificar_diagonal_1(Tablero  tablero){
+        for (int i = 1 ; i<tablero.getTable_final().length;i++){
+                if(!tablero.getTable_final()[i][i-1].equals("X")){
+                    return false;
+                }
+                }
+        return true;
+    }
+    public boolean verificar_diagonal_2(Tablero  tablero){
+        int j = tablero.getTable_final()[0].length-1;
+        for (int i = 1 ; i<tablero.getTable_final().length;i++){
+                j--;
+                if(!tablero.getTable_final()[i][j].equals("X")){
+                    return false;
+                }
+                }
+        return true;
+    }
+    public boolean verificar_x(Tablero tablero){
+        if(verificar_diagonal_1(tablero) && verificar_diagonal_2(tablero)){
+            return true;
+        }else{
+            return false;
+        }
+    }
     
 }   
